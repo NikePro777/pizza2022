@@ -1,4 +1,10 @@
+import React from 'react';
+
 const PizzaBlock = ({ title = 'пицца', price = 100 }) => {
+  const [count, setCount] = React.useState(0);
+  function addPizza() {
+    setCount(count + 1);
+  }
   return (
     <div className="pizza-block">
       <img
@@ -20,7 +26,7 @@ const PizzaBlock = ({ title = 'пицца', price = 100 }) => {
       </div>
       <div className="pizza-block__bottom">
         <div className="pizza-block__price">от {price} ₽</div>
-        <div className="button button--outline button--add">
+        <button onClick={addPizza} className="button button--outline button--add">
           <svg
             width="12"
             height="12"
@@ -33,8 +39,8 @@ const PizzaBlock = ({ title = 'пицца', price = 100 }) => {
             />
           </svg>
           <span>Добавить</span>
-          <i>2</i>
-        </div>
+          <i>{count}</i>
+        </button>
       </div>
     </div>
   );
