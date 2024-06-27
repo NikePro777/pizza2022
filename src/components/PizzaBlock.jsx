@@ -1,17 +1,15 @@
 import React from 'react';
 
-const PizzaBlock = ({ title = 'пицца', price = 100 }) => {
+const PizzaBlock = ({ title, price, sizes, imageUrl, types }) => {
   const [count, setCount] = React.useState(0);
   function addPizza() {
     setCount(count + 1);
   }
+
+  // const [activeSize, setActivSize] = React.useEffect(0);
   return (
     <div className="pizza-block">
-      <img
-        className="pizza-block__image"
-        src="https://dodopizza-a.akamaihd.net/static/Img/Products/Pizza/ru-RU/b750f576-4a83-48e6-a283-5a8efb68c35d.jpg"
-        alt="Pizza"
-      />
+      <img className="pizza-block__image" src={imageUrl} alt="Pizza" />
       <h4 className="pizza-block__title">{title}</h4>
       <div className="pizza-block__selector">
         <ul>
@@ -19,9 +17,13 @@ const PizzaBlock = ({ title = 'пицца', price = 100 }) => {
           <li>традиционное</li>
         </ul>
         <ul>
-          <li className="active">26 см.</li>
-          <li>30 см.</li>
-          <li>40 см.</li>
+          {sizes.map((size, i) => (
+            <li key={i} className="active">
+              {size} см.
+            </li>
+          ))}
+          {/* <li>30 см.</li>
+          <li>40 см.</li> */}
         </ul>
       </div>
       <div className="pizza-block__bottom">
