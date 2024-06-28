@@ -5,20 +5,30 @@ const PizzaBlock = ({ title, price, sizes, imageUrl, types }) => {
   function addPizza() {
     setCount(count + 1);
   }
-
-  // const [activeSize, setActivSize] = React.useEffect(0);
+  const pizzasTypes = ['тонкое', 'традиционное'];
+  const [activeTypes, setActiveTypes] = React.useState(0);
+  const [activeSize, setActiveSize] = React.useState(0);
   return (
     <div className="pizza-block">
       <img className="pizza-block__image" src={imageUrl} alt="Pizza" />
       <h4 className="pizza-block__title">{title}</h4>
       <div className="pizza-block__selector">
         <ul>
-          <li className="active">тонкое</li>
-          <li>традиционное</li>
+          {types.map((type, index) => (
+            <li
+              key={index}
+              onClick={() => setActiveTypes(index)}
+              className={activeTypes === index ? 'active' : ''}>
+              {pizzasTypes[type]}
+            </li>
+          ))}
         </ul>
         <ul>
           {sizes.map((size, i) => (
-            <li key={i} className="active">
+            <li
+              key={i}
+              onClick={() => setActiveSize(i)}
+              className={i === activeSize ? 'active' : ''}>
               {size} см.
             </li>
           ))}
