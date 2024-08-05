@@ -8,6 +8,13 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    @media (max-width: 460px) {
+      display: block;
+      .header__cart {
+        margin: 10px auto;
+        width: 200px;
+      }
+    }
   }
 
   &__logo {

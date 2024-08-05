@@ -7,6 +7,7 @@ body {
 }
 
 .wrapper {
+  display: block;
   width: calc(100vw - 100px);
   height: 100%;
   background-color: #fff;
@@ -15,6 +16,10 @@ body {
   max-width: 1400px;
   @media (max-width: 1150px) {
     margin: 20px auto;
+  }
+  @media (max-width: 900px) {
+    margin: 5px 10px;
+    width: calc(100vw - 30px);
   }
 }
 
@@ -48,6 +53,9 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    @media (max-width: 1150px) {
+      display: block;
+    }
   }
 }
 
