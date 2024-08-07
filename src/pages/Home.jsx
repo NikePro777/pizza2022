@@ -8,6 +8,8 @@ import Skeleton from '../components/PizzasBlock/Skeleton';
 const Home = () => {
   const [items, setItems] = React.useState([]);
   const [loaded, setLoaded] = React.useState(false);
+  const [activeCategory, setActiveCategory] = React.useState(0);
+
   React.useEffect(() => {
     fetch('https://66a87abee40d3aa6ff582e7d.mockapi.io/pizzas')
       .then((res) => res.json())
@@ -15,11 +17,14 @@ const Home = () => {
         setItems(res);
         setLoaded(true);
       });
-  }, []);
+  }, [activeCategory]);
   return (
     <>
       <div className="content__top">
-        <Categories />
+        <Categories
+          selectCategory={activeCategory}
+          onChangeCategory={(i) => setActiveCategory(i)}
+        />
         <Sort />
       </div>
       <h2 className="content__title">Все пиццы</h2>
