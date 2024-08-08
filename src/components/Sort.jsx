@@ -1,11 +1,11 @@
 import React from 'react';
 
-const Sort = () => {
+const Sort = ({ selectedSort, changeSelectedSort }) => {
   const sortCategory = ['популярности', 'цене', 'алфавиту'];
-  const [activeCategory, setActiveCategory] = React.useState(0);
   const [openSort, setOpenSort] = React.useState(false);
+
   function clickActiveCategory(indexCategory) {
-    setActiveCategory(indexCategory);
+    changeSelectedSort(indexCategory);
     setOpenSort(false);
   }
   return (
@@ -23,7 +23,7 @@ const Sort = () => {
           />
         </svg>
         <b>Сортировка по:</b>
-        <span onClick={() => setOpenSort(!openSort)}>{sortCategory[activeCategory]}</span>
+        <span onClick={() => setOpenSort(!openSort)}>{sortCategory[selectedSort]}</span>
       </div>
       {openSort && (
         <div className="sort__popup">
@@ -32,7 +32,7 @@ const Sort = () => {
               <li
                 key={i}
                 onClick={() => clickActiveCategory(i)}
-                className={i === activeCategory ? 'active' : ''}>
+                className={i === selectedSort ? 'active' : ''}>
                 {sortBy}
               </li>
             ))}
