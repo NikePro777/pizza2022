@@ -1,11 +1,15 @@
 import React from 'react';
 
 const Sort = ({ selectedSort, changeSelectedSort }) => {
-  const sortCategory = ['популярности', 'цене', 'алфавиту'];
+  const sortCategory = [
+    { name: 'популярности', sortName: 'rating' },
+    { name: 'цене', sortName: 'price' },
+    { name: 'алфавиту', sortName: 'title' },
+  ];
   const [openSort, setOpenSort] = React.useState(false);
 
-  function clickActiveCategory(indexCategory) {
-    changeSelectedSort(indexCategory);
+  function clickActiveCategory(objSort) {
+    changeSelectedSort(objSort);
     setOpenSort(false);
   }
   return (
@@ -23,17 +27,17 @@ const Sort = ({ selectedSort, changeSelectedSort }) => {
           />
         </svg>
         <b>Сортировка по:</b>
-        <span onClick={() => setOpenSort(!openSort)}>{sortCategory[selectedSort]}</span>
+        <span onClick={() => setOpenSort(!openSort)}>{selectedSort.name}</span>
       </div>
       {openSort && (
         <div className="sort__popup">
           <ul>
-            {sortCategory.map((sortBy, i) => (
+            {sortCategory.map((obj, i) => (
               <li
                 key={i}
-                onClick={() => clickActiveCategory(i)}
-                className={i === selectedSort ? 'active' : ''}>
-                {sortBy}
+                onClick={() => clickActiveCategory(obj)}
+                className={obj.name === selectedSort.name ? 'active' : ''}>
+                {obj.name}
               </li>
             ))}
           </ul>
