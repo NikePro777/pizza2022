@@ -6,9 +6,11 @@ import NotFound from './pages/NotFound';
 import Cart from './pages/Cart';
 
 function App() {
+  const [search, setSearch] = React.useState('1');
   return (
     <div className="wrapper">
-      <Header />
+      {console.log('search', search)}
+      <Header search={search} setSearch={setSearch} />
       <div className="content">
         <div className="container">
           <Routes>
