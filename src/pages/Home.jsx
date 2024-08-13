@@ -5,7 +5,7 @@ import Sort from '../components/Sort';
 import PizzaBlock from '../components/PizzasBlock';
 import Skeleton from '../components/PizzasBlock/Skeleton';
 
-const Home = () => {
+const Home = ({ search }) => {
   const [items, setItems] = React.useState([]);
   const [loaded, setLoaded] = React.useState(false);
   const [activeCategory, setActiveCategory] = React.useState(0);
@@ -13,19 +13,21 @@ const Home = () => {
     name: 'популярности',
     sortName: 'rating',
   });
-
   React.useEffect(() => {
     setLoaded(false);
     const url = new URL('https://66a87abee40d3aa6ff582e7d.mockapi.io/pizzas');
     url.searchParams.append('category', activeCategory > 0 ? activeCategory : '');
     url.searchParams.append('sortBy', sortCategory.sortName);
+    url.searchParams.append('title', search);
+
     fetch(url)
       .then((res) => res.json())
       .then((res) => {
+        // console.log(res.length > 0 ? 1 : 2);
         setItems(res);
         setLoaded(true);
       });
-  }, [activeCategory, sortCategory]);
+  }, [activeCategory, sortCategory, search]);
   return (
     <>
       <div className="content__top">
