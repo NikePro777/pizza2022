@@ -19,11 +19,10 @@ const Home = ({ search }) => {
     url.searchParams.append('category', activeCategory > 0 ? activeCategory : '');
     url.searchParams.append('sortBy', sortCategory.sortName);
     url.searchParams.append('title', search);
-
     fetch(url)
       .then((res) => res.json())
       .then((res) => {
-        // console.log(res.length > 0 ? 1 : 2);
+        // console.log(res?.length);
         setItems(res);
         setLoaded(true);
       });
