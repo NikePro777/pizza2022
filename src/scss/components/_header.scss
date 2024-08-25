@@ -8,11 +8,15 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    @media (max-width: 460px) {
+    @media (max-width: 580px) {
       display: block;
       .header__cart {
         margin: 10px auto;
         width: 200px;
+      }
+      .search {
+        margin: 10px auto;
+        width: 210px;
       }
     }
   }

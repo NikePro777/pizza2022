@@ -13,7 +13,10 @@ function Header({ search, setSearch }) {
             <p>самая вкусная пицца во вселенной</p>
           </div>
         </Link>
-        <Search search={search} setSearch={setSearch} />
+        <div className="search">
+          <Search search={search} setSearch={setSearch} />
+        </div>
+
         <div className="header__cart">
           <Link to="/cart" className="button button--cart">
             <span>520 ₽</span>
