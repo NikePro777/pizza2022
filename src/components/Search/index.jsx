@@ -19,7 +19,6 @@ export const Search = ({ search, setSearch }) => {
             fill="#000000"></path>
         </g>
       </svg>
-
       <input
         className={styles.input}
         type="text"
@@ -29,10 +28,43 @@ export const Search = ({ search, setSearch }) => {
           setSearch(event.target.value);
         }}
       />
-
-      <svg className={styles.close} enable-background="new 0 0 128 128" viewBox="0 0 128 128">
-        <path d="m90.3 44.7-19.2 19.3 19.3 19.3-7.1 7.1-19.3-19.3-19.3 19.2-7.1-7.1 19.3-19.2-19.2-19.3 7.1-7.1 19.2 19.3 19.3-19.3zm23.7 19.3c0 27.6-22.4 50-50 50s-50-22.4-50-50 22.4-50 50-50 50 22.4 50 50zm-10 0c0-22.1-17.9-40-40-40s-40 17.9-40 40 17.9 40 40 40 40-17.9 40-40z" />
-      </svg>
+      {/*  */}
+      {search && (
+        // <svg enableBackground="new 0 0 128 128" viewBox="0 0 128 128">
+        //   <path d="m90.3 44.7-19.2 19.3 19.3 19.3-7.1 7.1-19.3-19.3-19.3 19.2-7.1-7.1 19.3-19.2-19.2-19.3 7.1-7.1 19.2 19.3 19.3-19.3zm23.7 19.3c0 27.6-22.4 50-50 50s-50-22.4-50-50 22.4-50 50-50 50 22.4 50 50zm-10 0c0-22.1-17.9-40-40-40s-40 17.9-40 40 17.9 40 40 40 40-17.9 40-40z" />
+        // </svg>
+        <svg className={styles.close} viewBox="0 0 128 128">
+          <rect
+            // width="512"
+            // height="512"
+            // x="0"
+            // y="0"
+            // rx="30"
+            fill="transparent"
+            stroke="transparent"
+            stroke-width="0"
+            stroke-opacity="100%"></rect>
+          <svg
+            width="34px"
+            height="34px"
+            viewBox="0 0 32 32"
+            fill="currentColor"
+            // x="239"
+            // y="239"
+            role="img">
+            <g fill="currentColor">
+              <path
+                fill="none"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M2 30L30 2m0 28L2 2"
+              />
+            </g>
+          </svg>
+        </svg>
+      )}
     </div>
   );
 };
