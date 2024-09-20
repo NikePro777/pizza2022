@@ -4,6 +4,7 @@ import Categories from '../components/Categories';
 import Sort from '../components/Sort';
 import PizzaBlock from '../components/PizzasBlock';
 import Skeleton from '../components/PizzasBlock/Skeleton';
+import Pagination from '../components/Pagination';
 
 const Home = ({ search }) => {
   const [items, setItems] = React.useState([]);
@@ -13,9 +14,11 @@ const Home = ({ search }) => {
     name: 'популярности',
     sortName: 'rating',
   });
+  const [page, setCurrentPage] = React.useState(1);
+
   React.useEffect(() => {
     setLoaded(false);
-    const url = new URL('https://66a87abee40d3aa6ff582e7d.mockapi.io/pizzas');
+    const url = new URL(`https://66a87abee40d3aa6ff582e7d.mockapi.io/pizzas?page=${page}&limit=4`);
     url.searchParams.append('category', activeCategory > 0 ? activeCategory : '');
     url.searchParams.append('sortBy', sortCategory.sortName);
     url.searchParams.append('title', search);
@@ -26,7 +29,7 @@ const Home = ({ search }) => {
         setItems(res);
         setLoaded(true);
       });
-  }, [activeCategory, sortCategory, search]);
+  }, [activeCategory, sortCategory, search, page]);
   return (
     <>
       <div className="content__top">
@@ -42,6 +45,11 @@ const Home = ({ search }) => {
           ? items.map((pizza) => <PizzaBlock {...pizza} key={pizza.id} />)
           : [...new Array(6)].map((_, i) => <Skeleton key={i} />)}
       </div>
+      <Pagination
+        onChangePage={(number) => {
+          setCurrentPage(number);
+        }}
+      />
     </>
   );
 };

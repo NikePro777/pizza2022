@@ -28,22 +28,9 @@ export const Search = ({ search, setSearch }) => {
           setSearch(event.target.value);
         }}
       />
-      {/*  */}
       {search && (
-        // <svg enableBackground="new 0 0 128 128" viewBox="0 0 128 128">
-        //   <path d="m90.3 44.7-19.2 19.3 19.3 19.3-7.1 7.1-19.3-19.3-19.3 19.2-7.1-7.1 19.3-19.2-19.2-19.3 7.1-7.1 19.2 19.3 19.3-19.3zm23.7 19.3c0 27.6-22.4 50-50 50s-50-22.4-50-50 22.4-50 50-50 50 22.4 50 50zm-10 0c0-22.1-17.9-40-40-40s-40 17.9-40 40 17.9 40 40 40 40-17.9 40-40z" />
-        // </svg>
-        <svg className={styles.close} viewBox="0 0 128 128">
-          <rect
-            // width="512"
-            // height="512"
-            // x="0"
-            // y="0"
-            // rx="30"
-            fill="transparent"
-            stroke="transparent"
-            stroke-width="0"
-            stroke-opacity="100%"></rect>
+        <svg className={styles.close} onClick={() => setSearch('')} viewBox="0 0 128 128">
+          <rect fill="transparent" stroke="transparent" strokeWidth="0" strokeOpacity="100%"></rect>
           <svg
             width="34px"
             height="34px"
@@ -56,9 +43,9 @@ export const Search = ({ search, setSearch }) => {
               <path
                 fill="none"
                 stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
                 d="M2 30L30 2m0 28L2 2"
               />
             </g>
