@@ -1,6 +1,9 @@
+import React from 'react';
 import styles from './Search.module.scss';
+import { SearchContext } from '../../App';
 
-export const Search = ({ search, setSearch }) => {
+export const Search = () => {
+  const { search, setSearch } = React.useContext(SearchContext);
   return (
     <div className={styles.root}>
       <svg className={styles.icon} x="0px" y="0px" viewBox="0 0 463.001 463.001">
@@ -22,7 +25,7 @@ export const Search = ({ search, setSearch }) => {
       <input
         className={styles.input}
         type="text"
-        placeholder="search"
+        placeholder="введите название пиццы"
         value={search}
         onChange={(event) => {
           setSearch(event.target.value);

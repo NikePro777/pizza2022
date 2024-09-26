@@ -5,8 +5,10 @@ import Sort from '../components/Sort';
 import PizzaBlock from '../components/PizzasBlock';
 import Skeleton from '../components/PizzasBlock/Skeleton';
 import Pagination from '../components/Pagination';
+import { SearchContext } from '../App';
 
-const Home = ({ search }) => {
+const Home = () => {
+  const { search } = React.useContext(SearchContext);
   const [items, setItems] = React.useState([]);
   const [loaded, setLoaded] = React.useState(false);
   const [activeCategory, setActiveCategory] = React.useState(0);
@@ -15,7 +17,6 @@ const Home = ({ search }) => {
     sortName: 'rating',
   });
   const [page, setCurrentPage] = React.useState(1);
-
   React.useEffect(() => {
     setLoaded(false);
     const url = new URL(`https://66a87abee40d3aa6ff582e7d.mockapi.io/pizzas?page=${page}&limit=4`);
@@ -25,7 +26,6 @@ const Home = ({ search }) => {
     fetch(url)
       .then((res) => res.json())
       .then((res) => {
-        // console.log(res?.length);
         setItems(res);
         setLoaded(true);
       });
