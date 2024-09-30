@@ -1,9 +1,14 @@
 import React from 'react';
 import styles from './Search.module.scss';
-import { SearchContext } from '../../App';
+import { useSelector, useDispatch } from 'react-redux';
+import { setSearch } from '../../redux/slices/filterSlice';
+// import { SearchContext } from '../../App';
 
 export const Search = () => {
-  const { search, setSearch } = React.useContext(SearchContext);
+  // const { search, setSearch } = React.useContext(SearchContext);
+  const search = useSelector((state) => state.filter.value);
+  const dispatch = useDispatch();
+  console.log('filter', search);
   return (
     <div className={styles.root}>
       <svg className={styles.icon} x="0px" y="0px" viewBox="0 0 463.001 463.001">
@@ -28,20 +33,15 @@ export const Search = () => {
         placeholder="введите название пиццы"
         value={search}
         onChange={(event) => {
-          setSearch(event.target.value);
+          console.log('поле поиска 1', event.target.value);
+          dispatch(setSearch(event.target.value));
+          console.log('поле поиска 2', event.target.value);
         }}
       />
       {search && (
-        <svg className={styles.close} onClick={() => setSearch('')} viewBox="0 0 128 128">
+        <svg className={styles.close} onClick={() => dispatch(setSearch(''))} viewBox="0 0 128 128">
           <rect fill="transparent" stroke="transparent" strokeWidth="0" strokeOpacity="100%"></rect>
-          <svg
-            width="34px"
-            height="34px"
-            viewBox="0 0 32 32"
-            fill="currentColor"
-            // x="239"
-            // y="239"
-            role="img">
+          <svg width="34px" height="34px" viewBox="0 0 32 32" fill="currentColor" role="img">
             <g fill="currentColor">
               <path
                 fill="none"
