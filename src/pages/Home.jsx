@@ -6,11 +6,9 @@ import PizzaBlock from '../components/PizzasBlock';
 import Skeleton from '../components/PizzasBlock/Skeleton';
 import Pagination from '../components/Pagination';
 import { useSelector } from 'react-redux';
-// import { SearchContext } from '../App';
 
 const Home = () => {
   const search = useSelector((state) => state.filter.value);
-  // const { search } = React.useContext(SearchContext);
   const [items, setItems] = React.useState([]);
   const [loaded, setLoaded] = React.useState(false);
   const [activeCategory, setActiveCategory] = React.useState(0);
