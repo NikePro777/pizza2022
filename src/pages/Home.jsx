@@ -12,10 +12,11 @@ const Home = () => {
   const [items, setItems] = React.useState([]);
   const [loaded, setLoaded] = React.useState(false);
   const [activeCategory, setActiveCategory] = React.useState(0);
-  const [sortCategory, setSortCategory] = React.useState({
-    name: 'популярности',
-    sortName: 'rating',
-  });
+  // const [sortCategory0, setSortCategory] = React.useState({
+  //   name: 'популярности',
+  //   sortName: 'rating',
+  // });
+  const sortCategory = useSelector((state) => state.sort);
   const [page, setCurrentPage] = React.useState(1);
   React.useEffect(() => {
     setLoaded(false);
@@ -37,7 +38,7 @@ const Home = () => {
           selectCategory={activeCategory}
           onChangeCategory={(i) => setActiveCategory(i)}
         />
-        <Sort selectedSort={sortCategory} changeSelectedSort={(i) => setSortCategory(i)} />
+        <Sort />
       </div>
       <h2 className="content__title">Все пиццы</h2>
       <div className="content__items">

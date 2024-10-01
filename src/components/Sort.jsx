@@ -1,6 +1,10 @@
 import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { setSort } from '../redux/slices/sortSlice';
 
-const Sort = ({ selectedSort, changeSelectedSort }) => {
+const Sort = () => {
+  const selectedSort = useSelector((state) => state.sort);
+  const dispatch = useDispatch();
   const sortCategory = [
     { name: 'популярности', sortName: 'rating' },
     { name: 'цене', sortName: 'price' },
@@ -9,7 +13,7 @@ const Sort = ({ selectedSort, changeSelectedSort }) => {
   const [openSort, setOpenSort] = React.useState(false);
 
   function clickActiveCategory(objSort) {
-    changeSelectedSort(objSort);
+    dispatch(setSort(objSort));
     setOpenSort(false);
   }
   return (
