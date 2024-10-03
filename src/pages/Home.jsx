@@ -8,20 +8,15 @@ import Pagination from '../components/Pagination';
 import { useSelector } from 'react-redux';
 
 const Home = () => {
-  const search = useSelector((state) => state.filter.value);
   const [items, setItems] = React.useState([]);
   const [loaded, setLoaded] = React.useState(false);
-  const [activeCategory, setActiveCategory] = React.useState(0);
-  // const [sortCategory0, setSortCategory] = React.useState({
-  //   name: 'популярности',
-  //   sortName: 'rating',
-  // });
+  const { search, category } = useSelector((state) => state.filter);
   const sortCategory = useSelector((state) => state.sort);
   const [page, setCurrentPage] = React.useState(1);
   React.useEffect(() => {
     setLoaded(false);
     const url = new URL(`https://66a87abee40d3aa6ff582e7d.mockapi.io/pizzas?page=${page}&limit=4`);
-    url.searchParams.append('category', activeCategory > 0 ? activeCategory : '');
+    url.searchParams.append('category', category > 0 ? category : '');
     url.searchParams.append('sortBy', sortCategory.sortName);
     url.searchParams.append('title', search);
     fetch(url)
@@ -30,14 +25,11 @@ const Home = () => {
         setItems(res);
         setLoaded(true);
       });
-  }, [activeCategory, sortCategory, search, page]);
+  }, [category, sortCategory, search, page]);
   return (
     <>
       <div className="content__top">
-        <Categories
-          selectCategory={activeCategory}
-          onChangeCategory={(i) => setActiveCategory(i)}
-        />
+        <Categories />
         <Sort />
       </div>
       <h2 className="content__title">Все пиццы</h2>

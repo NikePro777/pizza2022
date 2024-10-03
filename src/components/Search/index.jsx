@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setSearch } from '../../redux/slices/filterSlice';
 
 export const Search = () => {
-  const search = useSelector((state) => state.filter.value);
+  const search = useSelector((state) => state.filter.search);
   const dispatch = useDispatch();
   return (
     <div className={styles.root}>
