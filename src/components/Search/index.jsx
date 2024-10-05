@@ -6,6 +6,11 @@ import { setSearch } from '../../redux/slices/filterSlice';
 export const Search = () => {
   const search = useSelector((state) => state.filter.search);
   const dispatch = useDispatch();
+  const inputRef = React.useRef();
+  const removeFocus = () => {
+    dispatch(setSearch(''));
+    inputRef.current.focus();
+  };
   return (
     <div className={styles.root}>
       <svg className={styles.icon} x="0px" y="0px" viewBox="0 0 463.001 463.001">
@@ -25,6 +30,7 @@ export const Search = () => {
         </g>
       </svg>
       <input
+        ref={inputRef}
         className={styles.input}
         type="text"
         placeholder="введите название пиццы"
@@ -34,7 +40,7 @@ export const Search = () => {
         }}
       />
       {search && (
-        <svg className={styles.close} onClick={() => dispatch(setSearch(''))} viewBox="0 0 128 128">
+        <svg className={styles.close} onClick={() => removeFocus()} viewBox="0 0 128 128">
           <rect fill="transparent" stroke="transparent" strokeWidth="0" strokeOpacity="100%"></rect>
           <svg width="34px" height="34px" viewBox="0 0 32 32" fill="currentColor" role="img">
             <g fill="currentColor">

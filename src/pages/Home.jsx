@@ -6,6 +6,7 @@ import PizzaBlock from '../components/PizzasBlock';
 import Skeleton from '../components/PizzasBlock/Skeleton';
 import Pagination from '../components/Pagination';
 import { useSelector } from 'react-redux';
+import axios from 'axios';
 
 const Home = () => {
   const [items, setItems] = React.useState([]);
@@ -19,12 +20,10 @@ const Home = () => {
     url.searchParams.append('category', category > 0 ? category : '');
     url.searchParams.append('sortBy', sortCategory.sortName);
     url.searchParams.append('title', search);
-    fetch(url)
-      .then((res) => res.json())
-      .then((res) => {
-        setItems(res);
-        setLoaded(true);
-      });
+    axios.get(url).then((res) => {
+      setItems(res.data);
+      setLoaded(true);
+    });
   }, [category, sortCategory, search, page]);
   return (
     <>
