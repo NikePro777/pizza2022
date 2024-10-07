@@ -1,15 +1,28 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import styles from './Search.module.scss';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { setSearch } from '../../redux/slices/filterSlice';
+import debounce from 'lodash.debounce';
 
 export const Search = () => {
-  const search = useSelector((state) => state.filter.search);
+  const [value, setValue] = React.useState('');
   const dispatch = useDispatch();
   const inputRef = React.useRef();
   const removeFocus = () => {
     dispatch(setSearch(''));
+    setValue('');
     inputRef.current.focus();
+  };
+  const updateGlobalSearchValue = useCallback(
+    debounce((newValue) => {
+      dispatch(setSearch(newValue));
+    }, 500),
+    [],
+  );
+
+  const updateSearchValue = (event) => {
+    setValue(event.target.value);
+    updateGlobalSearchValue(event.target.value);
   };
   return (
     <div className={styles.root}>
@@ -34,12 +47,12 @@ export const Search = () => {
         className={styles.input}
         type="text"
         placeholder="введите название пиццы"
-        value={search}
+        value={value}
         onChange={(event) => {
-          dispatch(setSearch(event.target.value));
+          updateSearchValue(event);
         }}
       />
-      {search && (
+      {value && (
         <svg className={styles.close} onClick={() => removeFocus()} viewBox="0 0 128 128">
           <rect fill="transparent" stroke="transparent" strokeWidth="0" strokeOpacity="100%"></rect>
           <svg width="34px" height="34px" viewBox="0 0 32 32" fill="currentColor" role="img">
