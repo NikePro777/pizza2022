@@ -5,15 +5,21 @@ import Sort from '../components/Sort';
 import PizzaBlock from '../components/PizzasBlock';
 import Skeleton from '../components/PizzasBlock/Skeleton';
 import Pagination from '../components/Pagination';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
+import { setCurrentPage } from '../redux/slices/filterSlice';
 
 const Home = () => {
+  const dispatch = useDispatch();
   const [items, setItems] = React.useState([]);
   const [loaded, setLoaded] = React.useState(false);
-  const { search, category } = useSelector((state) => state.filter);
+  const { search, category, page } = useSelector((state) => state.filter);
   const sortCategory = useSelector((state) => state.sort);
-  const [page, setCurrentPage] = React.useState(1);
+
+  const onChangePage = (number) => {
+    dispatch(setCurrentPage(number));
+  };
+
   React.useEffect(() => {
     setLoaded(false);
     const url = new URL(`https://66a87abee40d3aa6ff582e7d.mockapi.io/pizzas?page=${page}&limit=4`);
@@ -25,6 +31,7 @@ const Home = () => {
       setLoaded(true);
     });
   }, [category, sortCategory, search, page]);
+
   return (
     <>
       <div className="content__top">
@@ -37,11 +44,7 @@ const Home = () => {
           ? items.map((pizza) => <PizzaBlock {...pizza} key={pizza.id} />)
           : [...new Array(6)].map((_, i) => <Skeleton key={i} />)}
       </div>
-      <Pagination
-        onChangePage={(number) => {
-          setCurrentPage(number);
-        }}
-      />
+      <Pagination onChangePage={onChangePage} />
     </>
   );
 };
