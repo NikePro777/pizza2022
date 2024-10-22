@@ -1,21 +1,36 @@
 import React from 'react';
 
+import axios from 'axios';
+import qs from 'qs';
+import { useDispatch, useSelector } from 'react-redux';
+import { setCurrentPage } from '../redux/slices/filterSlice';
+import { useNavigate } from 'react-router-dom';
+
 import Categories from '../components/Categories';
 import Sort from '../components/Sort';
 import PizzaBlock from '../components/PizzasBlock';
 import Skeleton from '../components/PizzasBlock/Skeleton';
 import Pagination from '../components/Pagination';
-import { useDispatch, useSelector } from 'react-redux';
-import axios from 'axios';
-import { setCurrentPage } from '../redux/slices/filterSlice';
 
 const Home = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [items, setItems] = React.useState([]);
   const [loaded, setLoaded] = React.useState(false);
   const { search, category, page } = useSelector((state) => state.filter);
   const sortCategory = useSelector((state) => state.sort);
 
+  // получаем строку из параметров URL
+  React.useEffect(() => {
+    const queryString = qs.stringify({
+      sortCategory: sortCategory.sortName,
+      page,
+      category,
+    });
+    navigate(`?${queryString}`);
+  }, [sortCategory, page, category]);
+
+  // номер страницы получаем
   const onChangePage = (number) => {
     dispatch(setCurrentPage(number));
   };
