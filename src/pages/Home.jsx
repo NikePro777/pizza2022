@@ -18,7 +18,7 @@ const Home = () => {
   const [items, setItems] = React.useState([]);
   const [loaded, setLoaded] = React.useState(false);
   const { search, category, page } = useSelector((state) => state.filter);
-  const sortCategory = useSelector((state) => state.sort);
+  const sortCategory = useSelector((state) => state.filter.sort);
 
   // получаем строку из параметров URL
   React.useEffect(() => {
