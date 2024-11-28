@@ -2,15 +2,17 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setSort } from '../redux/slices/filterSlice';
 
+export const sortList = [
+  { name: 'популярности', sortName: 'rating' },
+  { name: 'цене', sortName: 'price' },
+  { name: 'алфавиту', sortName: 'title' },
+];
+
 const Sort = () => {
   const selectedSort = useSelector((state) => state.filter.sort.name);
 
   const dispatch = useDispatch();
-  const sortCategory = [
-    { name: 'популярности', sortName: 'rating' },
-    { name: 'цене', sortName: 'price' },
-    { name: 'алфавиту', sortName: 'title' },
-  ];
+
   const [openSort, setOpenSort] = React.useState(false);
 
   function clickActiveCategory(objSort) {
@@ -37,7 +39,7 @@ const Sort = () => {
       {openSort && (
         <div className="sort__popup">
           <ul>
-            {sortCategory.map((obj, i) => (
+            {sortList.map((obj, i) => (
               <li
                 key={i}
                 onClick={() => clickActiveCategory(obj)}

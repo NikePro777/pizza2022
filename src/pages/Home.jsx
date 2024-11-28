@@ -3,11 +3,11 @@ import React from 'react';
 import axios from 'axios';
 import qs from 'qs';
 import { useDispatch, useSelector } from 'react-redux';
-import { setCurrentPage } from '../redux/slices/filterSlice';
+import { setCurrentPage, setFilters } from '../redux/slices/filterSlice';
 import { useNavigate } from 'react-router-dom';
 
 import Categories from '../components/Categories';
-import Sort from '../components/Sort';
+import Sort, { sortList } from '../components/Sort';
 import PizzaBlock from '../components/PizzasBlock';
 import Skeleton from '../components/PizzasBlock/Skeleton';
 import Pagination from '../components/Pagination';
@@ -34,6 +34,22 @@ const Home = () => {
   const onChangePage = (number) => {
     dispatch(setCurrentPage(number));
   };
+
+  React.useEffect(() => {
+    if (window.location.search) {
+      const params = qs.parse(window.location.search.substring(1));
+      const sort = sortList.find((obj) => obj.sortName === params.sortCategory);
+      dispatch(
+        setFilters({
+          ...params,
+          sort,
+        }),
+      );
+    }
+  });
+  useSelector((state) => {
+    console.log(state);
+  });
 
   React.useEffect(() => {
     setLoaded(false);
