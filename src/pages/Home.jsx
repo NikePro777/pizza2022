@@ -68,6 +68,7 @@ const Home = () => {
     }
   }, []);
 
+  // Если был первый рендер, то запрашиваем пиццы
   React.useEffect(() => {
     window.scrollTo(0, 0);
     if (!isSearch.current) {
