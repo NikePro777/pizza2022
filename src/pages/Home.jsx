@@ -15,26 +15,45 @@ import Pagination from '../components/Pagination';
 const Home = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const isSearch = React.useRef(false);
+  const isMounted = React.useRef(false);
   const [items, setItems] = React.useState([]);
   const [loaded, setLoaded] = React.useState(false);
   const { search, category, page } = useSelector((state) => state.filter);
   const sortCategory = useSelector((state) => state.filter.sort);
 
-  // получаем строку из параметров URL
-  React.useEffect(() => {
-    const queryString = qs.stringify({
-      sortCategory: sortCategory.sortName,
-      page,
-      category,
+  const fetchPizzas = () => {
+    setLoaded(false);
+    const url = new URL(`https://66a87abee40d3aa6ff582e7d.mockapi.io/pizzas?page=${page}&limit=4`);
+    url.searchParams.append('category', category > 0 ? category : '');
+    url.searchParams.append('sortBy', sortCategory.sortName);
+    url.searchParams.append('title', search);
+    axios.get(url).then((res) => {
+      setItems(res.data);
+      setLoaded(true);
     });
-    navigate(`?${queryString}`);
-  }, [sortCategory, page, category]);
+  };
 
   // номер страницы получаем
   const onChangePage = (number) => {
     dispatch(setCurrentPage(number));
   };
 
+  // Если изменили параметры и был первый рендер
+  React.useEffect(() => {
+    // получаем строку из параметров URL
+    if (isMounted.current) {
+      const queryString = qs.stringify({
+        sortCategory: sortCategory.sortName,
+        page,
+        category,
+      });
+      navigate(`?${queryString}`);
+    }
+    isMounted.current = true;
+  }, [sortCategory, page, category]);
+
+  // при первом рендере, проверяем url параметры и сохраняем в редуксе
   React.useEffect(() => {
     if (window.location.search) {
       const params = qs.parse(window.location.search.substring(1));
@@ -45,22 +64,16 @@ const Home = () => {
           sort,
         }),
       );
+      isSearch.current = true;
     }
-  });
-  useSelector((state) => {
-    console.log(state);
-  });
+  }, []);
 
   React.useEffect(() => {
-    setLoaded(false);
-    const url = new URL(`https://66a87abee40d3aa6ff582e7d.mockapi.io/pizzas?page=${page}&limit=4`);
-    url.searchParams.append('category', category > 0 ? category : '');
-    url.searchParams.append('sortBy', sortCategory.sortName);
-    url.searchParams.append('title', search);
-    axios.get(url).then((res) => {
-      setItems(res.data);
-      setLoaded(true);
-    });
+    window.scrollTo(0, 0);
+    if (!isSearch.current) {
+      fetchPizzas();
+    }
+    isSearch.current = false;
   }, [category, sortCategory, search, page]);
 
   return (
