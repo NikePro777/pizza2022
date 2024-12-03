@@ -1,6 +1,6 @@
 import React from 'react';
 
-const PizzaBlock = ({ title, price, sizes, imageUrl, types }) => {
+const PizzaBlock = ({ id, title, price, sizes, imageUrl, types }) => {
   const [count, setCount] = React.useState(0);
   function addPizza() {
     setCount(count + 1);
