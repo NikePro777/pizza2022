@@ -21,11 +21,16 @@ const Sort = () => {
   }
 
   React.useEffect(() => {
-    const handleClickOutSide = (event) => {};
-    document.addEventListener('click', (event) => {
-      console.log(event.composedPath().includes(sortPath.current));
-    });
-  });
+    const handleClickOutSide = (event) => {
+      if (!event.composedPath().includes(sortPath.current)) {
+        setOpenSort(false);
+      }
+    };
+    document.body.addEventListener('click', handleClickOutSide);
+    return () => {
+      document.body.removeEventListener('click', handleClickOutSide);
+    };
+  }, []);
 
   return (
     <div ref={sortPath} className="sort">
