@@ -5,7 +5,6 @@ const initialState = {
   page: 1,
   search: '',
   category: 0,
-
   sort: {
     name: 'популярности',
     sortName: 'rating',

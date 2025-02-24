@@ -1,13 +1,19 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
+import { addItem } from '../../redux/slices/cartSlice';
 
 const PizzaBlock = ({ id, title, price, sizes, imageUrl, types }) => {
+  const dispatch = useDispatch();
   const [count, setCount] = React.useState(0);
+  const pizzasTypes = ['тонкое', 'традиционное'];
+  const [activeType, setActiveType] = React.useState(0);
+  const [activeSize, setActiveSize] = React.useState(0);
+
   function addPizza() {
     setCount(count + 1);
+    const item = { id, title, price, imageUrl, type: pizzasTypes[activeType], size: activeSize };
+    dispatch(addItem(item));
   }
-  const pizzasTypes = ['тонкое', 'традиционное'];
-  const [activeTypes, setActiveTypes] = React.useState(0);
-  const [activeSize, setActiveSize] = React.useState(0);
   return (
     <div className="pizza-block">
       <img className="pizza-block__image" src={imageUrl} alt="Pizza" />
@@ -17,8 +23,8 @@ const PizzaBlock = ({ id, title, price, sizes, imageUrl, types }) => {
           {types.map((type, index) => (
             <li
               key={index}
-              onClick={() => setActiveTypes(index)}
-              className={activeTypes === index ? 'active' : ''}>
+              onClick={() => setActiveType(index)}
+              className={activeType === index ? 'active' : ''}>
               {pizzasTypes[type]}
             </li>
           ))}

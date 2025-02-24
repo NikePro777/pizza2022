@@ -42,7 +42,6 @@ const Home = () => {
   // Если изменили параметры и был первый рендер
   React.useEffect(() => {
     // получаем строку из параметров URL
-    console.log(isMounted);
     if (isMounted.current) {
       const queryString = qs.stringify({
         sortCategory: sortCategory.sortName,
@@ -51,6 +50,7 @@ const Home = () => {
       });
       navigate(`?${queryString}`);
     }
+    isMounted.current = true;
   }, [sortCategory, page, category, navigate]);
 
   // при первом рендере, проверяем url параметры и сохраняем в редуксе
@@ -65,7 +65,6 @@ const Home = () => {
         }),
       );
       isSearch.current = true;
-      console.log(sort);
     }
     isMounted.current = true;
   }, [dispatch]);
