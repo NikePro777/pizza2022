@@ -12,7 +12,14 @@ const PizzaBlock = ({ id, title, price, sizes, imageUrl, types }) => {
   const addedCount = cartItem ? cartItem.count : 0;
 
   function addPizza() {
-    const item = { id, title, price, imageUrl, type: pizzasTypes[activeType], size: activeSize };
+    const item = {
+      id,
+      title,
+      price,
+      imageUrl,
+      type: pizzasTypes[activeType],
+      size: sizes[activeSize],
+    };
     dispatch(addItem(item));
   }
   return (
