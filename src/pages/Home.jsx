@@ -22,15 +22,20 @@ const Home = () => {
   const { search, category, page } = useSelector((state) => state.filter);
   const sortCategory = useSelector((state) => state.filter.sort);
 
-  const fetchPizzas = () => {
+  const fetchPizzas = async () => {
     setLoaded(false);
     const url = new URL(`https://66a87abee40d3aa6ff582e7d.mockapi.io/pizzas?page=${page}&limit=4`);
     url.searchParams.append('category', category > 0 ? category : '');
     url.searchParams.append('sortBy', sortCategory.sortName);
     url.searchParams.append('title', search);
-    axios.get(url).then((res) => {
-      setItems(res.data);
-      setLoaded(true);
+    const res = await axios.get(url);
+    setItems(res.data);
+    setLoaded(true);
+
+    window.scrollTo({
+      top: 20,
+      left: 0,
+      behavior: 'smooth',
     });
   };
 
