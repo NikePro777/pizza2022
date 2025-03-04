@@ -49,6 +49,16 @@ body {
     }
   }
 
+  &__error_info {
+    margin: 60px auto;
+    width: 580px;
+
+    h2 {
+      font-size: 28px;
+      font-weight: 700;
+    }
+  }
+
   &__top {
     display: flex;
     align-items: center;

@@ -16,27 +16,17 @@ const Home = () => {
   const navigate = useNavigate();
   const isSearch = React.useRef(false);
   const isMounted = React.useRef(false);
-  const [loaded, setLoaded] = React.useState(false);
   const { search, category, page } = useSelector((state) => state.filter);
-  const { items } = useSelector((state) => state.pizza);
+  const { items, status } = useSelector((state) => state.pizza);
   const sortCategory = useSelector((state) => state.filter.sort);
 
   const getPizzas = async () => {
-    setLoaded(false);
     const url = new URL(`https://66a87abee40d3aa6ff582e7d.mockapi.io/pizzas?page=${page}&limit=4`);
     url.searchParams.append('category', category > 0 ? category : '');
     url.searchParams.append('sortBy', sortCategory.sortName);
     url.searchParams.append('title', search);
-    try {
-      console.log(url);
 
-      dispatch(fetchPizzas(url.href));
-    } catch (err) {
-      console.log(err);
-    } finally {
-      setLoaded(true);
-    }
-
+    dispatch(fetchPizzas(url));
     window.scrollTo({
       top: 20,
       left: 0,
@@ -61,7 +51,8 @@ const Home = () => {
       navigate(`?${queryString}`);
     }
     isMounted.current = true;
-  }, [sortCategory, page, category, navigate]);
+    console.log('0', status, items);
+  }, []);
 
   // при первом рендере, проверяем url параметры и сохраняем в редуксе
   React.useEffect(() => {
@@ -77,16 +68,19 @@ const Home = () => {
       isSearch.current = true;
     }
     isMounted.current = true;
-  }, [dispatch]);
+    console.log('1', status, items);
+  }, []);
 
   // Если был первый рендер, то запрашиваем пиццы
   React.useEffect(() => {
     window.scrollTo(0, 0);
     if (!isSearch.current) {
+      console.log('1st render');
       getPizzas();
     }
     isSearch.current = false;
-  }, [category, sortCategory, search, page]);
+    console.log('2', status, items);
+  }, []);
 
   return (
     <>
@@ -95,11 +89,19 @@ const Home = () => {
         <Sort />
       </div>
       <h2 className="content__title">Все пиццы</h2>
-      <div className="content__items">
-        {loaded
-          ? items.map((pizza) => <PizzaBlock {...pizza} key={pizza.id} />)
-          : [...new Array(6)].map((_, i) => <Skeleton key={i} />)}
-      </div>
+      {status === 'error' ? (
+        <div className="content__error_info">
+          Что то пошло не так кажется
+          <h2>Может завтра?</h2>
+        </div>
+      ) : (
+        <div className="content__items">
+          {status === 'loading'
+            ? [...new Array(6)].map((_, i) => <Skeleton key={i} />)
+            : items.map((pizza) => <PizzaBlock {...pizza} key={pizza.id} />)}
+        </div>
+      )}
+
       <Pagination onChangePage={onChangePage} />
     </>
   );

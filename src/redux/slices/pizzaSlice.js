@@ -2,14 +2,13 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 export const fetchPizzas = createAsyncThunk('pizza/fetchStatus', async (url) => {
-  console.log(url);
-
   const { data } = await axios.get(url);
   return data;
 });
 
 const initialState = {
   items: [],
+  status: 'loading',
 };
 
 export const pizzaSlice = createSlice({
@@ -28,11 +27,17 @@ export const pizzaSlice = createSlice({
 
   extraReducers: (builder) => {
     // Add reducers for additional action types here, and handle loading state as needed
+    builder.addCase(fetchPizzas.pending, (state) => {
+      state.status = 'loading';
+      state.items = [];
+    });
     builder.addCase(fetchPizzas.fulfilled, (state, action) => {
-      // Add user to the state array
-      console.log(state);
-
-      // state.entities.push(action.payload)
+      state.items = action.payload;
+      state.status = 'success';
+    });
+    builder.addCase(fetchPizzas.rejected, (state) => {
+      state.status = 'error';
+      state.items = [];
     });
   },
 });
