@@ -1,8 +1,8 @@
 import React from 'react';
 import qs from 'qs';
 import { useDispatch, useSelector } from 'react-redux';
-import { setCurrentPage, setFilters } from '../redux/slices/filterSlice';
-import { fetchPizzas } from '../redux/slices/pizzaSlice';
+import { selectFilter, selectSort, setCurrentPage, setFilters } from '../redux/slices/filterSlice';
+import { fetchPizzas, selectPizzaData } from '../redux/slices/pizzaSlice';
 import { useNavigate } from 'react-router-dom';
 
 import Categories from '../components/Categories';
@@ -14,17 +14,22 @@ import Pagination from '../components/Pagination';
 const Home = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const isSearch = React.useRef(false);
   const isMounted = React.useRef(false);
-  const { search, category, page } = useSelector((state) => state.filter);
-  const { items, status } = useSelector((state) => state.pizza);
-  const sortCategory = useSelector((state) => state.filter.sort);
+
+  const isSearch = React.useRef(false);
+
+  const { items, status } = useSelector(selectPizzaData);
+  const { category, page, searchValue } = useSelector(selectFilter);
+
+  const sortCategory = useSelector(selectSort);
 
   const getPizzas = async () => {
     const url = new URL(`https://66a87abee40d3aa6ff582e7d.mockapi.io/pizzas?page=${page}&limit=4`);
     url.searchParams.append('category', category > 0 ? category : '');
+    console.log(sortCategory);
+
     url.searchParams.append('sortBy', sortCategory.sortName);
-    url.searchParams.append('title', search);
+    url.searchParams.append('title', searchValue);
 
     dispatch(fetchPizzas(url));
     window.scrollTo({

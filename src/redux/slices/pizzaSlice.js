@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-export const fetchPizzas = createAsyncThunk('pizza/fetchStatus', async (url) => {
+export const fetchPizzas = createAsyncThunk('pizza/fetchStatus', async (url, thunkAPI) => {
   const { data } = await axios.get(url);
   return data;
 });
@@ -41,6 +41,8 @@ export const pizzaSlice = createSlice({
     });
   },
 });
+
+export const selectPizzaData = (state) => state.pizza;
 
 export const { setItems } = pizzaSlice.actions;
 
