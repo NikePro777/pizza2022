@@ -45,7 +45,8 @@ const Sort = () => {
           />
         </svg>
         <b>Сортировка по:</b>
-        <span onClick={() => setOpenSort(!openSort)}>{selectedSort}</span>
+        {console.log(openSort, 'openSort', selectedSort, 'selectedSort')}
+        <span onClick={() => setOpenSort(!openSort)}>{selectedSort?.name}</span>
       </div>
       {openSort && (
         <div className="sort__popup">

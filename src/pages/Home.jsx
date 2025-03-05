@@ -57,7 +57,7 @@ const Home = () => {
     }
     isMounted.current = true;
     console.log('0', status, items);
-  }, []);
+  }, [sortCategory, category, page]);
 
   // при первом рендере, проверяем url параметры и сохраняем в редуксе
   React.useEffect(() => {
