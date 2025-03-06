@@ -15,7 +15,6 @@ const Home = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const isMounted = React.useRef(false);
-
   const isSearch = React.useRef(false);
 
   const { items, status } = useSelector(selectPizzaData);
@@ -57,7 +56,8 @@ const Home = () => {
     }
     isMounted.current = true;
     console.log('0', status, items);
-  }, [sortCategory, category, page]);
+    getPizzas();
+  }, [sortCategory, category, page, searchValue]);
 
   // при первом рендере, проверяем url параметры и сохраняем в редуксе
   React.useEffect(() => {
