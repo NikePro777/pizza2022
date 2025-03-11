@@ -3,7 +3,7 @@ import qs from 'qs';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectFilter, selectSort, setCurrentPage, setFilters } from '../redux/slices/filterSlice';
 import { fetchPizzas, selectPizzaData } from '../redux/slices/pizzaSlice';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import Categories from '../components/Categories';
 import Sort, { sortList } from '../components/Sort';
@@ -103,7 +103,11 @@ const Home = () => {
         <div className="content__items">
           {status === 'loading'
             ? [...new Array(6)].map((_, i) => <Skeleton key={i} />)
-            : items.map((pizza) => <PizzaBlock {...pizza} key={pizza.id} />)}
+            : items.map((pizza) => (
+                <Link to={`pizza/${pizza.id}`} key={pizza.id}>
+                  <PizzaBlock {...pizza} />
+                </Link>
+              ))}
         </div>
       )}
 
