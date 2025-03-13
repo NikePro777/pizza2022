@@ -25,7 +25,6 @@ const Home = () => {
   const getPizzas = async () => {
     const url = new URL(`https://66a87abee40d3aa6ff582e7d.mockapi.io/pizzas?page=${page}&limit=4`);
     url.searchParams.append('category', category > 0 ? category : '');
-    console.log(sortCategory);
 
     url.searchParams.append('sortBy', sortCategory.sortName);
     url.searchParams.append('title', searchValue);
@@ -55,7 +54,6 @@ const Home = () => {
       navigate(`?${queryString}`);
     }
     isMounted.current = true;
-    console.log('0', status, items);
     getPizzas();
   }, [sortCategory, category, page, searchValue]);
 
@@ -73,18 +71,15 @@ const Home = () => {
       isSearch.current = true;
     }
     isMounted.current = true;
-    console.log('1', status, items);
   }, []);
 
   // Если был первый рендер, то запрашиваем пиццы
   React.useEffect(() => {
     window.scrollTo(0, 0);
     if (!isSearch.current) {
-      console.log('1st render');
       getPizzas();
     }
     isSearch.current = false;
-    console.log('2', status, items);
   }, []);
 
   return (

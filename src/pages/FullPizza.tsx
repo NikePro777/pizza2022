@@ -3,7 +3,7 @@ import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 const FullPizza = () => {
-  const [pizza, setPizza] = React.useState();
+  const [pizza, setPizza] = React.useState<{ imageUrl: string; title: string; price: number }>();
   const { id } = useParams();
   const navigate = useNavigate();
 
