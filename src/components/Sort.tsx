@@ -8,20 +8,21 @@ export const sortList = [
   { name: 'алфавиту', sortName: 'title' },
 ];
 
-const Sort = () => {
+const Sort: React.FC = () => {
   const selectedSort = useSelector(selectSort);
   const dispatch = useDispatch();
-  const sortPath = React.useRef();
+  const sortPath = React.useRef(null);
 
   const [openSort, setOpenSort] = React.useState(false);
 
+  // @ts-ignore
   function clickActiveCategory(objSort) {
     dispatch(setSort(objSort));
     setOpenSort(false);
   }
 
   React.useEffect(() => {
-    const handleClickOutSide = (event) => {
+    const handleClickOutSide = (event: any) => {
       if (!event.composedPath().includes(sortPath.current)) {
         setOpenSort(false);
       }

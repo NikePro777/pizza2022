@@ -4,9 +4,9 @@ import Search from './Search';
 import { useSelector } from 'react-redux';
 import { selectCart } from '../redux/slices/cartSlice';
 
-function Header() {
+const Header: React.FC = () => {
   const { items, totalPrice } = useSelector(selectCart);
-  const totalCount = items.reduce((sum, item) => sum + item.count, 0);
+  const totalCount = items.reduce((sum: number, item: any) => sum + item.count, 0);
   const location = useLocation();
 
   return (
@@ -63,6 +63,6 @@ function Header() {
       </div>
     </div>
   );
-}
+};
 
 export default Header;

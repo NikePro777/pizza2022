@@ -7,7 +7,7 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import Categories from '../components/Categories';
 import Sort, { sortList } from '../components/Sort';
-import PizzaBlock from '../components/PizzasBlock';
+import PizzaBlock, { PizzaBlockProps } from '../components/PizzasBlock';
 import Skeleton from '../components/PizzasBlock/Skeleton';
 import Pagination from '../components/Pagination';
 
@@ -29,6 +29,7 @@ const Home = () => {
     url.searchParams.append('sortBy', sortCategory.sortName);
     url.searchParams.append('title', searchValue);
 
+    // @ts-ignore
     dispatch(fetchPizzas(url));
     window.scrollTo({
       top: 20,
@@ -38,8 +39,8 @@ const Home = () => {
   };
 
   // номер страницы получаем
-  const onChangePage = (number) => {
-    dispatch(setCurrentPage(number));
+  const onChangePage = (page: number) => {
+    dispatch(setCurrentPage(page));
   };
 
   // Если изменили параметры и был первый рендер
@@ -98,7 +99,7 @@ const Home = () => {
         <div className="content__items">
           {status === 'loading'
             ? [...new Array(6)].map((_, i) => <Skeleton key={i} />)
-            : items.map((pizza) => (
+            : items.map((pizza: PizzaBlockProps) => (
                 <Link to={`pizza/${pizza.id}`} key={pizza.id}>
                   <PizzaBlock {...pizza} />
                 </Link>
@@ -106,7 +107,9 @@ const Home = () => {
         </div>
       )}
 
-      <Pagination onChangePage={onChangePage} />
+      <Pagination //@ts-ignore
+        onChangePage={onChangePage}
+      />
     </>
   );
 };

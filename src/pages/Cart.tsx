@@ -1,9 +1,9 @@
 import { useDispatch, useSelector } from 'react-redux';
-import CartItem from '../components/CartItem';
+import CartItem, { CartItemProps } from '../components/CartItem';
 import { clearItems, selectCart } from '../redux/slices/cartSlice';
 import CartEmpty from '../components/CartEmpty';
 
-const Cart = () => {
+const Cart: React.FC = () => {
   const dispatch = useDispatch();
   const { totalPrice, items } = useSelector(selectCart);
   const totalCount = items.reduce((sum: number, item: { count: number }) => sum + item.count, 0);
@@ -91,19 +91,9 @@ const Cart = () => {
           </div>
         </div>
         <div className="content__items">
-          {items.map(
-            (item: {
-              id: number;
-              title: string;
-              count: number;
-              price: number;
-              imageUrl: string;
-              type: string;
-              size: number;
-            }) => (
-              <CartItem {...item} key={item.id} />
-            ),
-          )}
+          {items.map((item: CartItemProps) => (
+            <CartItem {...item} key={item.id} />
+          ))}
         </div>
         <div className="cart__bottom">
           <div className="cart__bottom-details">
