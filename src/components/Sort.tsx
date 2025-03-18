@@ -22,7 +22,7 @@ const Sort: React.FC = () => {
   }
 
   React.useEffect(() => {
-    const handleClickOutSide = (event: any) => {
+    const handleClickOutSide = (event: React.MouseEvent<HTMLSpanElement>) => {
       if (!event.composedPath().includes(sortPath.current)) {
         setOpenSort(false);
       }

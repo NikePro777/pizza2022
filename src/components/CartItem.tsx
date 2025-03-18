@@ -1,4 +1,4 @@
-import React, { FC, ReactElement, ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 import { useDispatch } from 'react-redux';
 import { minusItem, addItem, removeItem } from '../redux/slices/cartSlice';
 
