@@ -107,9 +107,7 @@ const Home = () => {
         </div>
       )}
 
-      <Pagination //@ts-ignore
-        onChangePage={onChangePage}
-      />
+      <Pagination onChangePage={onChangePage} />
     </>
   );
 };

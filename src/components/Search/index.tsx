@@ -7,22 +7,22 @@ import debounce from 'lodash.debounce';
 export const Search = () => {
   const dispatch = useDispatch();
   const [value, setValue] = React.useState('');
-  const inputRef = React.useRef();
+  const inputRef = React.useRef<HTMLInputElement>(null);
 
   const removeFocus = () => {
     dispatch(setSearchValue(''));
     setValue('');
-    inputRef.current.focus();
+    inputRef.current?.focus();
   };
 
   const updateGlobalSearchValue = React.useCallback(
-    debounce((newValue) => {
+    debounce((newValue: string) => {
       dispatch(setSearchValue(newValue));
     }, 500),
     [],
   );
 
-  const updateSearchValue = (event) => {
+  const updateSearchValue = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue(event.target.value);
     updateGlobalSearchValue(event.target.value);
   };
@@ -50,9 +50,7 @@ export const Search = () => {
         type="text"
         placeholder="введите название пиццы"
         value={value}
-        onChange={(event) => {
-          updateSearchValue(event);
-        }}
+        onChange={updateSearchValue}
       />
       {value && (
         <svg className={styles.close} onClick={() => removeFocus()} viewBox="0 0 128 128">
