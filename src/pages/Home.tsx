@@ -24,7 +24,7 @@ const Home = () => {
 
   const getPizzas = async () => {
     const url = new URL(`https://66a87abee40d3aa6ff582e7d.mockapi.io/pizzas?page=${page}&limit=4`);
-    url.searchParams.append('category', category > 0 ? category : '');
+    url.searchParams.append('category', category > 0 ? category.toString() : '');
 
     url.searchParams.append('sortBy', sortCategory.sortName);
     url.searchParams.append('title', searchValue);

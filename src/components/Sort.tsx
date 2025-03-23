@@ -55,7 +55,7 @@ const Sort: React.FC = () => {
               <li
                 key={i}
                 onClick={() => clickActiveCategory(obj)}
-                className={obj.name === selectedSort ? 'active' : ''}>
+                className={obj.name === selectedSort.name ? 'active' : ''}>
                 {obj.name}
               </li>
             ))}
