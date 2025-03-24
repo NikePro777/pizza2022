@@ -1,9 +1,10 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { RootState } from '../store';
+import { CartItem } from './cartSlice';
 
-export const fetchPizzas = createAsyncThunk('pizza/fetchStatus', async (url: string, thunkAPI) => {
-  const { data } = await axios.get(url);
+export const fetchPizzas = createAsyncThunk('pizza/fetchStatus', async (url: string) => {
+  const { data } = await axios.get<CartItem[]>(url);
   return data;
 });
 

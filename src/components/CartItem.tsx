@@ -23,14 +23,14 @@ const CartItem: React.FC<CartItemProps> = ({
 }): ReactNode => {
   const dispatch = useDispatch();
   const onClickPlus = () => {
-    dispatch(addItem({ id }));
+    dispatch(addItem({ id, title, count, price, imageUrl, type, size }));
   };
   const onClickMinus = () => {
-    dispatch(minusItem({ id }));
+    dispatch(minusItem(id));
   };
   const onClickRemove = () => {
     if (window.confirm('Ты действительно хочешь удалить товар?')) {
-      dispatch(removeItem({ id }));
+      dispatch(removeItem(id));
     }
   };
 
