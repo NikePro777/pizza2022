@@ -1,7 +1,13 @@
 import React from 'react';
 import qs from 'qs';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectFilter, selectSort, setCurrentPage, setFilters } from '../redux/slices/filterSlice';
+import {
+  FilterSliceState,
+  selectFilter,
+  selectSort,
+  setCurrentPage,
+  setFilters,
+} from '../redux/slices/filterSlice';
 import { fetchPizzas, selectPizzaData } from '../redux/slices/pizzaSlice';
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -10,9 +16,11 @@ import Sort, { sortList } from '../components/Sort';
 import PizzaBlock, { PizzaBlockProps } from '../components/PizzasBlock';
 import Skeleton from '../components/PizzasBlock/Skeleton';
 import Pagination from '../components/Pagination';
+import { useAppDispatch } from '../redux/store';
 
+// export const useAppDispatch: () => AppDispatch = useDispatch;
 const Home = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const isMounted = React.useRef(false);
   const isSearch = React.useRef(false);
@@ -25,7 +33,6 @@ const Home = () => {
   const getPizzas = async () => {
     const url = new URL(`https://66a87abee40d3aa6ff582e7d.mockapi.io/pizzas?page=${page}&limit=4`);
     url.searchParams.append('category', category > 0 ? category.toString() : '');
-
     url.searchParams.append('sortBy', sortCategory.sortName);
     url.searchParams.append('title', searchValue);
 
@@ -61,14 +68,18 @@ const Home = () => {
   // при первом рендере, проверяем url параметры и сохраняем в редуксе
   React.useEffect(() => {
     if (window.location.search) {
-      const params = qs.parse(window.location.search.substring(1));
-      const sort = sortList.find((obj) => obj.sortName === params.sortCategory);
+      const params = qs.parse(window.location.search.substring(1)) as unknown as FilterSliceState;
+      const sort = sortList.find((obj) => obj.sortName === params.sort.sortName);
+
       dispatch(
         setFilters({
-          ...params,
-          sort,
+          searchValue: params.searchValue,
+          page: params.page,
+          category: params.category,
+          sort: sort ? sort : sortList.sortName,
         }),
       );
+
       isSearch.current = true;
     }
     isMounted.current = true;

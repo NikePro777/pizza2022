@@ -2,7 +2,11 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectSort, setSort } from '../redux/slices/filterSlice';
 
-export const sortList = [
+interface SortListType {
+  name: string;
+  sortName: 'rating' | 'price' | 'title';
+}
+export const sortList: SortListType[] = [
   { name: 'популярности', sortName: 'rating' },
   { name: 'цене', sortName: 'price' },
   { name: 'алфавиту', sortName: 'title' },
