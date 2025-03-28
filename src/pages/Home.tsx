@@ -1,6 +1,6 @@
 import React from 'react';
 import qs from 'qs';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import {
   FilterSliceState,
   selectFilter,
@@ -9,7 +9,7 @@ import {
   setFilters,
 } from '../redux/slices/filterSlice';
 import { fetchPizzas, selectPizzaData } from '../redux/slices/pizzaSlice';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import Categories from '../components/Categories';
 import Sort, { sortList } from '../components/Sort';
@@ -36,7 +36,6 @@ const Home = () => {
     url.searchParams.append('sortBy', sortCategory.sortName);
     url.searchParams.append('title', searchValue);
 
-    // @ts-ignore
     dispatch(fetchPizzas(url));
     window.scrollTo({
       top: 20,
@@ -110,11 +109,7 @@ const Home = () => {
         <div className="content__items">
           {status === 'loading'
             ? [...new Array(6)].map((_, i) => <Skeleton key={i} />)
-            : items.map((pizza: PizzaBlockProps) => (
-                <Link to={`pizza/${pizza.id}`} key={pizza.id}>
-                  <PizzaBlock {...pizza} />
-                </Link>
-              ))}
+            : items.map((pizza: PizzaBlockProps) => <PizzaBlock {...pizza} />)}
         </div>
       )}
 
