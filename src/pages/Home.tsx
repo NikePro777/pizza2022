@@ -109,7 +109,7 @@ const Home = () => {
         <div className="content__items">
           {status === 'loading'
             ? [...new Array(6)].map((_, i) => <Skeleton key={i} />)
-            : items.map((pizza: PizzaBlockProps) => <PizzaBlock {...pizza} />)}
+            : items.map((pizza: PizzaBlockProps) => <PizzaBlock {...pizza} key={pizza.id} />)}
         </div>
       )}
 
