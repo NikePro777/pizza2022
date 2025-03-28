@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../store';
 
-enum SortNameEnum {
+export enum SortNameEnum {
   RATING = 'rating',
   PRICE = 'price',
   TITLE = 'title',

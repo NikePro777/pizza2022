@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { RootState } from '../store';
 import { SortFilterSlice } from './filterSlice';
+import { URL } from 'url';
 
 type SearchPizzaParams = {
   sortBy: SortFilterSlice;
@@ -11,8 +12,8 @@ type SearchPizzaParams = {
   currentPage: string;
 };
 
-export const fetchPizzas = createAsyncThunk('pizza/fetchStatus', async (url) => {
-  const { data } = await axios.get<PizzaItems[]>(url);
+export const fetchPizzas = createAsyncThunk('pizza/fetchStatus', async (url: URL) => {
+  const { data } = await axios.get<PizzaItems[]>(url.toString());
   return data;
 });
 
@@ -57,8 +58,8 @@ export const pizzaSlice = createSlice({
       state.items = [];
     });
     builder.addCase(fetchPizzas.fulfilled, (state, action) => {
-      state.items = action.payload;
       state.status = Status.SUCCESS;
+      state.items = action.payload;
     });
     builder.addCase(fetchPizzas.rejected, (state) => {
       state.status = Status.ERROR;

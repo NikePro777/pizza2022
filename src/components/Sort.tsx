@@ -1,15 +1,16 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectSort, setSort } from '../redux/slices/filterSlice';
+import { selectSort, setSort, SortNameEnum } from '../redux/slices/filterSlice';
 
 interface SortListType {
   name: string;
-  sortName: 'rating' | 'price' | 'title';
+  sortName: SortNameEnum;
 }
+
 export const sortList: SortListType[] = [
-  { name: 'популярности', sortName: 'rating' },
-  { name: 'цене', sortName: 'price' },
-  { name: 'алфавиту', sortName: 'title' },
+  { name: 'популярности', sortName: SortNameEnum.RATING },
+  { name: 'цене', sortName: SortNameEnum.PRICE },
+  { name: 'алфавиту', sortName: SortNameEnum.TITLE },
 ];
 
 const Sort: React.FC = () => {

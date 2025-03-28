@@ -69,14 +69,14 @@ const Home = () => {
   React.useEffect(() => {
     if (window.location.search) {
       const params = qs.parse(window.location.search.substring(1)) as unknown as FilterSliceState;
-      const sort = sortList.find((obj) => obj.sortName === params.sort.sortName);
+      const sort = sortList.find((obj) => obj.sortName === params.sort?.name);
 
       dispatch(
         setFilters({
           searchValue: params.searchValue,
           page: params.page,
           category: params.category,
-          sort: sort ? sort : sortList.sortName,
+          sort: sort || sortList[0],
         }),
       );
 
