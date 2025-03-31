@@ -1,14 +1,6 @@
 import React from 'react';
 import qs from 'qs';
 import { useSelector } from 'react-redux';
-import {
-  FilterSliceState,
-  selectFilter,
-  selectSort,
-  setCurrentPage,
-  setFilters,
-} from '../redux/slices/filterSlice';
-import { fetchPizzas, selectPizzaData } from '../redux/slices/pizzaSlice';
 import { useNavigate } from 'react-router-dom';
 
 import Categories from '../components/Categories';
@@ -17,6 +9,11 @@ import PizzaBlock, { PizzaBlockProps } from '../components/PizzasBlock';
 import Skeleton from '../components/PizzasBlock/Skeleton';
 import Pagination from '../components/Pagination';
 import { useAppDispatch } from '../redux/store';
+import { selectPizzaData } from '../redux/pizza/selectors';
+import { selectFilter, selectSort } from '../redux/filter/selectors';
+import { setCurrentPage, setFilters } from '../redux/filter/slice';
+import { FilterSliceState } from '../redux/filter/type';
+import { fetchPizzas } from '../redux/pizza/asyncActions';
 
 // export const useAppDispatch: () => AppDispatch = useDispatch;
 const Home = () => {
