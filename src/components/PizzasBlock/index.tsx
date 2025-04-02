@@ -22,7 +22,6 @@ const PizzaBlock: React.FC<PizzaBlockProps> = ({ id, title, price, sizes, imageU
 
   const cartItem = useSelector(selectCartItemById(id));
   const addedCount = cartItem ? cartItem.count : 0;
-  console.log(id);
 
   function addPizza() {
     const item: CartItem = {

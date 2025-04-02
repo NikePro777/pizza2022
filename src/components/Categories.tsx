@@ -1,10 +1,11 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setCategory } from '../redux/filter/slice';
+import { RootState } from '../redux/store';
 
-const Categories: React.FC = () => {
+const Categories: React.FC = React.memo(() => {
   const dispatch = useDispatch();
-  const selectCategory = useSelector((state: any) => state.filter.category);
+  const selectCategory = useSelector((state: RootState) => state.filter.category);
   const categories = ['Все', 'Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые'];
   return (
     <div className="categories">
@@ -20,6 +21,6 @@ const Categories: React.FC = () => {
       </ul>
     </div>
   );
-};
+});
 
 export default Categories;

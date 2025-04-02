@@ -29,9 +29,7 @@ const Header: React.FC = () => {
             <p>самая вкусная пицца во вселенной</p>
           </div>
         </Link>
-        <div className="search">
-          <Search />
-        </div>
+        <div className="search">{location.pathname !== '/cart' && <Search />}</div>
 
         <div className="header__cart">
           {location.pathname !== '/cart' && (

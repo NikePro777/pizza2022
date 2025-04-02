@@ -15,8 +15,7 @@ import { setCurrentPage, setFilters } from '../redux/filter/slice';
 import { FilterSliceState } from '../redux/filter/type';
 import { fetchPizzas } from '../redux/pizza/asyncActions';
 
-// export const useAppDispatch: () => AppDispatch = useDispatch;
-const Home = () => {
+const Home = React.memo(() => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const isMounted = React.useRef(false);
@@ -94,7 +93,7 @@ const Home = () => {
     <>
       <div className="content__top">
         <Categories />
-        <Sort />
+        <Sort value={sortCategory} />
       </div>
       <h2 className="content__title">Все пиццы</h2>
       {status === 'error' ? (
@@ -113,6 +112,6 @@ const Home = () => {
       <Pagination onChangePage={onChangePage} />
     </>
   );
-};
+});
 
 export default Home;

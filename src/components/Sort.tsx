@@ -1,29 +1,24 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { SortNameEnum } from '../redux/filter/type';
-import { selectSort } from '../redux/filter/selectors';
+import { useDispatch } from 'react-redux';
+import { SortFilterSlice, SortNameEnum } from '../redux/filter/type';
 import { setSort } from '../redux/filter/slice';
 
-interface SortListType {
-  name: string;
-  sortName: SortNameEnum;
-}
-
-export const sortList: SortListType[] = [
+export const sortList: SortFilterSlice[] = [
   { name: 'популярности', sortName: SortNameEnum.RATING },
   { name: 'цене', sortName: SortNameEnum.PRICE },
   { name: 'алфавиту', sortName: SortNameEnum.TITLE },
 ];
 
-const Sort: React.FC = () => {
-  const selectedSort = useSelector(selectSort);
+type SortPopup = {
+  value: SortFilterSlice;
+};
+
+const Sort: React.FC<SortPopup> = React.memo(({ value }) => {
   const dispatch = useDispatch();
   const sortPath = React.useRef(null);
-
   const [openSort, setOpenSort] = React.useState(false);
 
-  // @ts-ignore
-  function clickActiveCategory(objSort) {
+  function clickActiveCategory(objSort: SortFilterSlice) {
     dispatch(setSort(objSort));
     setOpenSort(false);
   }
@@ -53,7 +48,7 @@ const Sort: React.FC = () => {
           />
         </svg>
         <b>Сортировка по:</b>
-        <span onClick={() => setOpenSort(!openSort)}>{selectedSort?.name}</span>
+        <span onClick={() => setOpenSort(!openSort)}>{value.name}</span>
       </div>
       {openSort && (
         <div className="sort__popup">
@@ -62,7 +57,7 @@ const Sort: React.FC = () => {
               <li
                 key={i}
                 onClick={() => clickActiveCategory(obj)}
-                className={obj.name === selectedSort.name ? 'active' : ''}>
+                className={obj.name === value.name ? 'active' : ''}>
                 {obj.name}
               </li>
             ))}
@@ -71,6 +66,6 @@ const Sort: React.FC = () => {
       )}
     </div>
   );
-};
+});
 
 export default Sort;
